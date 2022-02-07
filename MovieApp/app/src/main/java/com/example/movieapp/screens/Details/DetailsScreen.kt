@@ -1,5 +1,6 @@
 package com.example.movieapp.screens.Details
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -11,9 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.movieapp.model.getMovies
+import com.example.movieapp.widgets.HorizontalScrollableImageView
+import com.example.movieapp.widgets.MovieRow
 
+@ExperimentalAnimationApi
 @Composable
-fun DetailsScreen(navController: NavController, movieData: String?) {
+fun DetailsScreen(navController: NavController, movieId: String?) {
+
+    val newMovieList = getMovies().filter { movie ->
+        movie.id == movieId
+    }
+
     Scaffold(topBar = {
         TopAppBar(
             backgroundColor = Color.LightGray,
@@ -36,10 +46,15 @@ fun DetailsScreen(navController: NavController, movieData: String?) {
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Top
             ) {
-                Text(text = "$movieData", style = MaterialTheme.typography.h5)
+                MovieRow(movieInformations = newMovieList[0])
+                Spacer(modifier = Modifier.height(8.dp))
+                Divider()
+                Text(text = "Movie Images")
+                HorizontalScrollableImageView(newMovieList = newMovieList)
             }
         }
     }
 }
+
