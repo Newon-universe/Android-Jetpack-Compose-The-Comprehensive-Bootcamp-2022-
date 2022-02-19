@@ -89,5 +89,8 @@ dependencies {
     //GSON converter
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    //data store
+    implementation("androidx.datastore:datastore:1.0.0")
+
 
 }

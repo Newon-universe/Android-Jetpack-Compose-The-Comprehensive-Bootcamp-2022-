@@ -29,4 +29,6 @@ class QuestionsViewModel @Inject constructor(private val questionRepository: Que
                 data.value.loadingState = false
         }
     }
+
+    fun getTotalQuestionCount(): Int? = data.value.data?.size
 }
