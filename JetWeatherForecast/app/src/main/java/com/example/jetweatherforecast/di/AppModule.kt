@@ -1,14 +1,18 @@
 package com.example.jetweatherforecast.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.jetweatherforecast.data.WeatherDao
+import com.example.jetweatherforecast.data.WeatherDatabase
 import com.example.jetweatherforecast.navigation.WeatherAPI
 import com.example.jetweatherforecast.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -26,6 +30,20 @@ class AppModule {
             .build()
             .create(WeatherAPI::class.java)
 
+    @Provides
+    @Singleton
+    fun provideWeatherDao(weatherDatabase: WeatherDatabase): WeatherDao =
+        weatherDatabase.weatherDao()
 
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): WeatherDatabase =
+        Room.databaseBuilder(
+            context, // DB 는 앱 내의 정보들이 필요해요 !!
+            WeatherDatabase::class.java,  // DB 를 어떻게 만들까슝?
+            "weather_database" // DB 이름은 뭐로 할까요?
+        )
+            .fallbackToDestructiveMigration()  // DB 가 이전 버전이거나 migration 등이 되는 경우에, 걍 새로 파셈
+            .build() // 이렇게 만들어줘, 해 줘
 
 }

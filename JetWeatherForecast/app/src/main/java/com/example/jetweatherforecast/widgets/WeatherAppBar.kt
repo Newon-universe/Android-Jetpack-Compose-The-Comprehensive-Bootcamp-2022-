@@ -5,14 +5,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -20,8 +18,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.jetweatherforecast.model.Favorite
 import com.example.jetweatherforecast.navigation.WeatherScreens
+import com.example.jetweatherforecast.screens.favorites.FavoritesViewModel
 
 @Composable
 fun WeatherAppBar(
@@ -30,6 +31,7 @@ fun WeatherAppBar(
     isMainScreen: Boolean = true,
     elevation: Dp = 0.dp,
     navController: NavController,
+    favoriteViewModel: FavoritesViewModel = hiltViewModel(),
     onAddActionClicked: () -> Unit = {},
     onButtonClicked: () -> Unit = {}
 ) {
@@ -73,6 +75,25 @@ fun WeatherAppBar(
                             onButtonClicked.invoke()
                         })
                 }
+            }
+
+            if (isMainScreen) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorites Icon",
+                    modifier = Modifier
+                        .scale(0.9f)
+                        .clickable {
+                            val titleData = title.split(",")
+                            favoriteViewModel.insertFavorite(
+                                Favorite(
+                                    city = titleData[0],
+                                    country = titleData[1]
+                                )
+                            )
+                        },
+                    tint = Color.Red.copy(alpha = 0.6f)
+                )
             }
         },
         backgroundColor = Color.Transparent,
