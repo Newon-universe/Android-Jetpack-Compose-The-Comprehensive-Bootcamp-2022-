@@ -81,7 +81,7 @@ fun CityRow(
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
             Text(text = favorite.city, modifier = Modifier.padding(start = 4.dp))
             Surface(

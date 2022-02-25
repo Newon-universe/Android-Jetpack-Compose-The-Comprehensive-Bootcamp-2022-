@@ -13,6 +13,7 @@ import com.example.jetweatherforecast.screens.main.MainScreen
 import com.example.jetweatherforecast.screens.main.MainViewModel
 import com.example.jetweatherforecast.screens.search.SearchScreen
 import com.example.jetweatherforecast.screens.settings.SettingsScreen
+import com.example.jetweatherforecast.screens.settings.SettingsViewModel
 import com.example.jetweatherforecast.screens.splash.WeatherSplashScreen
 
 @Composable
@@ -50,15 +51,15 @@ fun WeatherNavigation() {
             SearchScreen(navController = navController)
         }
 
-        composable(WeatherScreens.AboutScreen.name){
+        composable(WeatherScreens.AboutScreen.name) {
             AboutScreen(navController = navController)
         }
 
-        composable(WeatherScreens.SettingsScreen.name){
+        composable(WeatherScreens.SettingsScreen.name) {
             SettingsScreen(navController = navController)
         }
 
-        composable(WeatherScreens.FavoriteScreen.name){
+        composable(WeatherScreens.FavoriteScreen.name) {
             FavoritesScreen(navController = navController)
         }
     }
