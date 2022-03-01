@@ -1,9 +1,9 @@
 package com.example.areader.screens.update
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 
 @Composable
-fun BookUpdateScreen(navController: NavHostController) {
+fun BookUpdateScreen(navController: NavController) {
 
 }

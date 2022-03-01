@@ -16,16 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.areader.components.ReaderLogo
 import com.example.areader.navigation.ReaderScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
-@Preview
 @Composable
-fun ReaderSplashScreen(navController: NavController = NavController(context = LocalContext.current)) {
+fun ReaderSplashScreen(navController: NavController) {
 
     val scale = remember {
         Animatable(0f)
@@ -42,7 +41,15 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
             )
         )
         delay(2000L)
-        navController.navigate(ReaderScreens.ReaderHomeScreen.name)
+        if (FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
+            navController.navigate(ReaderScreens.LoginScreen.name) {
+                popUpTo(ReaderScreens.SplashScreen.name) { inclusive = true }
+            }
+        } else {
+            navController.navigate(ReaderScreens.ReaderHomeScreen.name) {
+                popUpTo(ReaderScreens.SplashScreen.name) { inclusive = true }
+            }
+        }
     }
 
     Surface(
@@ -60,11 +67,7 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "A. Reader",
-                style = MaterialTheme.typography.h3,
-                color = Color.Red.copy(alpha = 0.5f)
-            )
+            ReaderLogo()
 
             Spacer(modifier = Modifier.height(15.dp))
 
@@ -77,3 +80,4 @@ fun ReaderSplashScreen(navController: NavController = NavController(context = Lo
 
     }
 }
+
